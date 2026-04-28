@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Primary SEO -->
+  <title>Lapsey – Timelapse Camera App for iPhone &amp; iPad</title>
+  <meta name="description" content="Lapsey is the elegant timelapse camera app for iPhone and iPad. Set your interval, lock your exposure, and let Lapsey capture the world changing around you. Free to try, £1.99 to unlock." />
+  <meta name="keywords" content="timelapse app, timelapse camera, iPhone timelapse, iPad timelapse, iOS timelapse, time lapse photography, timelapse maker, interval shooting" />
+  <link rel="canonical" href="https://SamStone92.github.io/lapsey/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://SamStone92.github.io/lapsey/" />
+  <meta property="og:title" content="Lapsey – Timelapse Camera for iPhone &amp; iPad" />
+  <meta property="og:description" content="The elegant timelapse camera app. Set your interval, lock exposure, trigger on motion, and share stunning timelapses in minutes." />
+  <meta property="og:image" content="https://SamStone92.github.io/lapsey/og-image.png" />
+  <meta property="og:site_name" content="Lapsey" />
+  <meta property="og:locale" content="en_GB" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Lapsey – Timelapse Camera for iPhone &amp; iPad" />
+  <meta name="twitter:description" content="The elegant timelapse camera app. Set your interval, lock exposure, trigger on motion, and share stunning timelapses." />
+  <meta name="twitter:image" content="https://SamStone92.github.io/lapsey/og-image.png" />
+
+  <!-- App metadata -->
+  <meta name="apple-itunes-app" content="app-id=6467548808" />
+  <meta name="application-name" content="Lapsey" />
+  <meta name="theme-color" content="#111113" />
+
+  <!-- Schema.org structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MobileApplication",
+    "name": "Lapsey",
+    "description": "Lapsey is an elegant timelapse camera app for iPhone and iPad. Capture stunning timelapses with configurable intervals, exposure lock, motion detection, and project-based organisation.",
+    "operatingSystem": "iOS 17.0+",
+    "applicationCategory": "PhotographyApplication",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "GBP",
+      "description": "Free to download. One-time £1.99 unlock for full access."
+    },
+    "url": "https://SamStone92.github.io/lapsey/",
+    "downloadUrl": "https://apps.apple.com/app/id6467548808",
+    "author": {
+      "@type": "Person",
+      "name": "Sam Stone"
+    }
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      /* Brand palette — pulled from app icon */
+      --pink:    #e8357a;
+      --rose:    #f0507e;
+      --orange:  #f47c3c;
+      --amber:   #f5a032;
+
+      --grad: linear-gradient(135deg, var(--pink) 0%, var(--orange) 100%);
+      --grad-soft: linear-gradient(135deg, rgba(232,53,122,0.18) 0%, rgba(244,124,60,0.12) 100%);
+
+      /* Surfaces — match icon's dark charcoal */
+      --bg:       #111113;
+      --surface:  #1a1a1e;
+      --surface2: #222226;
+      --border:   rgba(255,255,255,0.07);
+      --border-hi: rgba(232,53,122,0.25);
+
+      --text:  #f2f2f5;
+      --muted: #8e8e96;
+
+      --radius: 22px;
+      --max: 1100px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+      font-size: 17px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Gradient text helper ── */
+    .grad-text {
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 32px;
+      background: rgba(17,17,19,0.82);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .nav-logo span { background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--grad);
+      color: #fff;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 9px 20px;
+      border-radius: 980px;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+      box-shadow: 0 4px 24px rgba(232,53,122,0.35);
+    }
+    .nav-cta:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    /* ─── HERO ─── */
+    .hero {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 96px 32px 72px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 980px;
+      background: var(--grad-soft);
+      border: 1px solid var(--border-hi);
+      margin-bottom: 22px;
+    }
+    .hero-badge span { background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    h1 {
+      font-size: clamp(38px, 5.5vw, 62px);
+      font-weight: 800;
+      letter-spacing: -2px;
+      line-height: 1.06;
+      margin-bottom: 24px;
+    }
+    .hero-sub {
+      font-size: 19px;
+      color: var(--muted);
+      line-height: 1.55;
+      max-width: 460px;
+      margin-bottom: 36px;
+    }
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--grad);
+      color: #fff;
+      font-weight: 700;
+      font-size: 16px;
+      padding: 15px 28px;
+      border-radius: 980px;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+      box-shadow: 0 8px 32px rgba(232,53,122,0.38);
+    }
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-2px); }
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.18s;
+    }
+    .btn-ghost:hover { color: var(--text); }
+    .hero-pricing {
+      margin-top: 18px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .hero-pricing strong { color: var(--text); }
+
+    /* App icon */
+    .hero-icon-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    .icon-glow {
+      position: absolute;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(232,53,122,0.22) 0%, rgba(244,124,60,0.14) 40%, transparent 70%);
+      border-radius: 50%;
+      animation: pulse 5s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.7; transform: scale(1); }
+      50%       { opacity: 1; transform: scale(1.1); }
+    }
+    .app-icon-img {
+      width: 160px;
+      height: 160px;
+      border-radius: 36px;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.06);
+      position: relative;
+    }
+
+    /* ─── SCREENSHOTS ─── */
+    .screenshots-section {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+      padding: 72px 0 80px;
+    }
+    .screenshots-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+    .screenshots-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+    .screenshots-row {
+      display: flex;
+      gap: 28px;
+      justify-content: center;
+      align-items: flex-end;
+      flex-wrap: wrap;
+    }
+
+    /* iPhone frame */
+    .phone {
+      flex-shrink: 0;
+      width: 220px;
+      border-radius: 38px;
+      background: #0a0a0c;
+      border: 2px solid rgba(255,255,255,0.12);
+      box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04);
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.3s ease;
+    }
+    .phone:hover { transform: translateY(-8px); }
+    .phone.tall { height: 460px; }
+    .phone.medium { height: 420px; margin-top: 20px; }
+    .phone.short  { height: 380px; margin-top: 40px; }
+    .phone-notch {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90px;
+      height: 26px;
+      background: #0a0a0c;
+      border-bottom-left-radius: 16px;
+      border-bottom-right-radius: 16px;
+      z-index: 10;
+    }
+    .phone-screen {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      padding-top: 36px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Screen 1 — Camera capture */
+    .screen-capture {
+      background: #000;
+    }
+    .screen-capture .viewfinder {
+      flex: 1;
+      background: linear-gradient(160deg, #1a2a1a 0%, #0d1a0d 40%, #111 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .viewfinder-grid {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr 1fr;
+    }
+    .viewfinder-grid div {
+      border: 0.5px solid rgba(255,255,255,0.1);
+    }
+    .vf-subject {
+      position: absolute;
+      bottom: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 70%;
+      height: 30%;
+      background: linear-gradient(135deg, #1e3a1e, #2d5a2d);
+      border-radius: 4px;
+      opacity: 0.7;
+    }
+    .vf-sky {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 50%;
+      background: linear-gradient(180deg, #0a1628, #1a2840);
+    }
+    .capture-controls {
+      padding: 10px 12px 14px;
+      background: #0a0a0c;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .ctrl-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .ctrl-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .ctrl-btn.accent { background: var(--grad); border: none; }
+    .ctrl-record {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 3px solid var(--rose);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ctrl-record-inner {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--grad);
+    }
+    .ctrl-timer {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 980px;
+      padding: 4px 10px;
+      font-size: 9px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .ctrl-timer-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--grad);
+    }
+
+    /* Screen 2 — Playback */
+    .screen-playback {
+      background: #000;
+    }
+    .playback-frame {
+      flex: 1;
+      background: linear-gradient(160deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .pb-horizon {
+      position: absolute;
+      bottom: 30%;
+      left: 0; right: 0;
+      height: 1px;
+      background: rgba(255,255,255,0.1);
+    }
+    .pb-city {
+      position: absolute;
+      bottom: 30%;
+      left: 0; right: 0;
+      height: 25%;
+      background: linear-gradient(180deg, transparent, rgba(10,10,20,0.9));
+    }
+    .pb-city::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 5%; right: 5%;
+      height: 100%;
+      background:
+        linear-gradient(180deg, transparent 20%, #0d0d1a 20%) 0/14% 100%,
+        linear-gradient(180deg, transparent 40%, #0d0d1a 40%) 14%/14% 100%,
+        linear-gradient(180deg, transparent 15%, #0d0d1a 15%) 28%/14% 100%,
+        linear-gradient(180deg, transparent 55%, #0d0d1a 55%) 42%/14% 100%,
+        linear-gradient(180deg, transparent 30%, #0d0d1a 30%) 56%/14% 100%,
+        linear-gradient(180deg, transparent 10%, #0d0d1a 10%) 70%/14% 100%,
+        linear-gradient(180deg, transparent 45%, #0d0d1a 45%) 84%/16% 100%;
+      background-repeat: no-repeat;
+    }
+    .playback-controls {
+      padding: 10px 12px 14px;
+      background: #0a0a0c;
+    }
+    .pb-progress {
+      height: 3px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 2px;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+    .pb-progress-fill {
+      height: 100%;
+      width: 42%;
+      background: var(--grad);
+      border-radius: 2px;
+    }
+    .pb-btns {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+    }
+    .pb-btn {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+    }
+    .pb-play {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: var(--grad);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .pb-play-tri {
+      width: 0; height: 0;
+      border-style: solid;
+      border-width: 7px 0 7px 12px;
+      border-color: transparent transparent transparent #fff;
+      margin-left: 2px;
+    }
+
+    /* Screen 3 — Frame viewer */
+    .screen-frames {
+      background: var(--bg);
+    }
+    .frames-header {
+      padding: 8px 12px;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .frames-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2px;
+      flex: 1;
+    }
+    .frame-thumb {
+      aspect-ratio: 3/4;
+      background: var(--surface2);
+    }
+    .frame-thumb:nth-child(1)  { background: linear-gradient(135deg, #0d1628, #1a2840); }
+    .frame-thumb:nth-child(2)  { background: linear-gradient(135deg, #1a1a2e, #16213e); }
+    .frame-thumb:nth-child(3)  { background: linear-gradient(135deg, #16213e, #0f3460); }
+    .frame-thumb:nth-child(4)  { background: linear-gradient(135deg, #0f3460, #533483); }
+    .frame-thumb:nth-child(5)  { background: linear-gradient(135deg, #533483, #e91e63); }
+    .frame-thumb:nth-child(6)  { background: linear-gradient(135deg, #e91e63, #ff9800); }
+    .frame-thumb:nth-child(7)  { background: linear-gradient(135deg, #ff9800, #ffeb3b); }
+    .frame-thumb:nth-child(8)  { background: linear-gradient(135deg, #ffeb3b, #ff9800); }
+    .frame-thumb:nth-child(9)  { background: linear-gradient(135deg, #ff9800, #e91e63); }
+
+    /* Screen 4 — Export */
+    .screen-export {
+      background: var(--bg);
+    }
+    .export-header-bar {
+      padding: 8px 14px 6px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+    }
+    .export-preview {
+      height: 120px;
+      background: linear-gradient(135deg, #0d1628, #1a2840, #0f3460, #533483, #e91e63, #ff9800);
+      margin: 0 12px;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+    }
+    .export-play-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.3);
+    }
+    .export-play-circle {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      border: 2px solid rgba(255,255,255,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .export-tri {
+      width: 0; height: 0;
+      border-style: solid;
+      border-width: 5px 0 5px 9px;
+      border-color: transparent transparent transparent #fff;
+      margin-left: 2px;
+    }
+    .export-meta {
+      padding: 10px 14px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .export-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .export-label {
+      font-size: 9px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .export-val {
+      font-size: 10px;
+      font-weight: 600;
+    }
+    .export-share-btn {
+      margin: 10px 14px 0;
+      background: var(--grad);
+      border-radius: 8px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    /* Caption below phones */
+    .screenshot-caption {
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+    .phone-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* ─── FEATURES ─── */
+    section { max-width: var(--max); margin: 0 auto; padding: 80px 32px; }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .section-label.grad { background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .section-title {
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 800;
+      letter-spacing: -1.2px;
+      line-height: 1.12;
+      margin-bottom: 16px;
+    }
+    .section-sub {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 520px;
+      line-height: 1.55;
+      margin-bottom: 52px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 18px;
+    }
+    .feature-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .feature-card:hover {
+      border-color: rgba(232,53,122,0.2);
+      transform: translateY(-2px);
+    }
+    .feature-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: var(--grad-soft);
+      border: 1px solid var(--border-hi);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin-bottom: 16px;
+    }
+    .feature-card h3 {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      margin-bottom: 7px;
+    }
+    .feature-card p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    /* ─── HOW IT WORKS ─── */
+    .how-section {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .how-section > div { max-width: var(--max); margin: 0 auto; padding: 80px 32px; }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 32px;
+    }
+    .step-num {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      background: var(--grad);
+      color: #fff;
+      font-weight: 800;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+      box-shadow: 0 4px 16px rgba(232,53,122,0.3);
+    }
+    .step h3 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+    .step p  { font-size: 13px; color: var(--muted); line-height: 1.55; }
+
+    /* ─── PRO ─── */
+    .pro-card {
+      background: var(--surface);
+      border: 1px solid var(--border-hi);
+      border-radius: 28px;
+      padding: 52px 48px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 48px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .pro-card::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(232,53,122,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .pro-card h2 {
+      font-size: clamp(26px, 3.5vw, 38px);
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
+    .pro-card > div > p {
+      font-size: 16px;
+      color: var(--muted);
+      margin-bottom: 24px;
+      max-width: 440px;
+    }
+    .pro-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+    .pro-list li {
+      font-size: 15px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .pro-list li::before {
+      content: "✓";
+      font-weight: 800;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      flex-shrink: 0;
+    }
+    .price-tag { text-align: center; flex-shrink: 0; }
+    .price-amount {
+      font-size: 56px;
+      font-weight: 800;
+      letter-spacing: -3px;
+      line-height: 1;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .price-label { font-size: 13px; color: var(--muted); margin-top: 6px; }
+
+    /* ─── FAQ ─── */
+    .faq-list { display: flex; flex-direction: column; gap: 14px; }
+    details {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    details[open] { border-color: var(--border-hi); }
+    summary {
+      padding: 20px 26px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      user-select: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::after {
+      content: "+";
+      font-size: 20px;
+      font-weight: 300;
+      color: var(--muted);
+      flex-shrink: 0;
+      transition: transform 0.2s;
+    }
+    details[open] summary::after { transform: rotate(45deg); }
+    .faq-body {
+      padding: 0 26px 20px;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ─── CTA ─── */
+    .cta-section {
+      text-align: center;
+      padding: 100px 32px;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    .cta-section h2 {
+      font-size: clamp(30px, 5vw, 50px);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.08;
+      margin-bottom: 20px;
+    }
+    .cta-section p {
+      font-size: 18px;
+      color: var(--muted);
+      margin-bottom: 40px;
+    }
+
+    /* App Store badge — hand-rolled SVG replacement */
+    .appstore-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: #fff;
+      color: #000;
+      border-radius: 14px;
+      padding: 12px 24px;
+      text-decoration: none;
+      transition: transform 0.18s, opacity 0.18s;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+    .appstore-wrap:hover { transform: translateY(-2px); opacity: 0.92; }
+    .appstore-icon { font-size: 32px; line-height: 1; }
+    .appstore-text { display: flex; flex-direction: column; text-align: left; }
+    .appstore-sub { font-size: 11px; font-weight: 400; opacity: 0.7; line-height: 1.2; }
+    .appstore-main { font-size: 20px; font-weight: 700; line-height: 1.2; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 36px 32px;
+      max-width: var(--max);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-logo { font-size: 17px; font-weight: 800; color: var(--text); text-decoration: none; }
+    .footer-links { display: flex; gap: 24px; list-style: none; }
+    .footer-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.18s; }
+    .footer-links a:hover { color: var(--text); }
+    .footer-copy { font-size: 12px; color: var(--muted); width: 100%; }
+
+    hr { border: none; border-top: 1px solid var(--border); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 780px) {
+      .hero { grid-template-columns: 1fr; padding: 60px 20px 48px; text-align: center; }
+      .hero-icon-wrap { order: -1; }
+      .hero-sub { max-width: 100%; }
+      .hero-actions { justify-content: center; }
+      .pro-card { grid-template-columns: 1fr; padding: 36px 24px; text-align: center; }
+      .price-tag { margin: 0 auto; }
+      nav { padding: 12px 20px; }
+      section { padding: 56px 20px; }
+      footer { padding: 28px 20px; flex-direction: column; align-items: flex-start; }
+      .phone { width: 170px; }
+      .phone.tall   { height: 360px; }
+      .phone.medium { height: 330px; }
+      .phone.short  { height: 300px; }
+    }
+    @media (max-width: 500px) {
+      .screenshots-row { gap: 16px; }
+      .phone { width: 140px; }
+      .phone.tall   { height: 290px; }
+      .phone.medium { height: 260px; }
+      .phone.short  { height: 230px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ─── NAV ─── -->
+  <nav>
+    <a class="nav-logo" href="/">Lap<span>sey</span></a>
+    <a class="nav-cta" href="https://apps.apple.com/app/id6467548808" rel="noopener">
+      Download Free
+    </a>
+  </nav>
+
+  <main>
+
+    <!-- ─── HERO ─── -->
+    <div class="hero">
+      <div>
+        <div class="hero-badge">
+          <span>📸 Timelapse for iPhone &amp; iPad</span>
+        </div>
+        <h1>Watch the world <span class="grad-text">change</span> in front of you.</h1>
+        <p class="hero-sub">Lapsey is the elegant timelapse camera app that stays out of your way. Set your interval, point your camera, and compress hours into seconds.</p>
+        <div class="hero-actions">
+          <a class="btn-primary" href="https://apps.apple.com/app/id6467548808" rel="noopener">
+            Download on the App Store
+          </a>
+          <a class="btn-ghost" href="#screenshots">See it in action ↓</a>
+        </div>
+        <p class="hero-pricing">Free to download &nbsp;·&nbsp; <strong>£1.99</strong> one-time unlock &nbsp;·&nbsp; No subscription</p>
+      </div>
+      <div class="hero-icon-wrap" aria-hidden="true">
+        <div class="icon-glow"></div>
+        <img class="app-icon-img" src="icon.png" alt="Lapsey app icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <div class="app-icon-img" style="display:none; background: linear-gradient(135deg, #e8357a 0%, #f47c3c 100%); align-items:center; justify-content:center; font-size:72px;">📷</div>
+      </div>
+    </div>
+
+    <!-- ─── SCREENSHOTS ─── -->
+    <div class="screenshots-section" id="screenshots">
+      <div class="screenshots-inner">
+        <div class="screenshots-header">
+          <div class="section-label grad">The app</div>
+          <h2 class="section-title">Built for the perfect shot.</h2>
+        </div>
+
+        <div class="screenshots-row">
+
+          <!-- Phone 1: Camera capture -->
+          <div class="phone-wrap">
+            <div class="phone tall" aria-label="Camera capture screen">
+              <div class="phone-notch"></div>
+              <div class="phone-screen screen-capture">
+                <div class="viewfinder">
+                  <div class="vf-sky"></div>
+                  <div class="vf-subject"></div>
+                  <div class="viewfinder-grid">
+                    <div></div><div></div><div></div>
+                    <div></div><div></div><div></div>
+                    <div></div><div></div><div></div>
+                  </div>
+                </div>
+                <div class="capture-controls">
+                  <div class="ctrl-row">
+                    <div class="ctrl-timer">
+                      <div class="ctrl-timer-dot"></div>
+                      5s
+                    </div>
+                  </div>
+                  <div class="ctrl-row" style="justify-content:space-between; padding: 0 8px;">
+                    <div class="ctrl-btn"></div>
+                    <div class="ctrl-record">
+                      <div class="ctrl-record-inner"></div>
+                    </div>
+                    <div class="ctrl-btn"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p class="screenshot-caption">Capture</p>
+          </div>
+
+          <!-- Phone 2: Playback (centred, tallest) -->
+          <div class="phone-wrap">
+            <div class="phone medium" aria-label="Playback screen">
+              <div class="phone-notch"></div>
+              <div class="phone-screen screen-playback">
+                <div class="playback-frame">
+                  <div class="pb-horizon"></div>
+                  <div class="pb-city"></div>
+                </div>
+                <div class="playback-controls">
+                  <div class="pb-progress">
+                    <div class="pb-progress-fill"></div>
+                  </div>
+                  <div class="pb-btns">
+                    <div class="pb-btn"></div>
+                    <div class="pb-play"><div class="pb-play-tri"></div></div>
+                    <div class="pb-btn"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p class="screenshot-caption">Playback</p>
+          </div>
+
+          <!-- Phone 3: Frame viewer -->
+          <div class="phone-wrap">
+            <div class="phone short" aria-label="Frame viewer screen">
+              <div class="phone-notch"></div>
+              <div class="phone-screen screen-frames">
+                <div class="frames-header">All Frames · 127</div>
+                <div class="frames-grid">
+                  <div class="frame-thumb"></div>
+                  <div class="frame-thumb"></div>
+                  <div class="frame-thumb"></div>
+                  <div class="frame-thumb"></div>
+                  <div class="frame-thumb"></div>
+                  <div class="frame-thumb"></div>
+                  <div class="frame-thumb"></div>
+                  <div class="frame-thumb"></div>
+                  <div class="frame-thumb"></div>
+                </div>
+              </div>
+            </div>
+            <p class="screenshot-caption">Frames</p>
+          </div>
+
+          <!-- Phone 4: Export -->
+          <div class="phone-wrap">
+            <div class="phone medium" aria-label="Export screen" style="margin-top:40px;">
+              <div class="phone-notch"></div>
+              <div class="phone-screen screen-export">
+                <div class="export-header-bar">Export Video</div>
+                <div class="export-preview">
+                  <div class="export-play-overlay">
+                    <div class="export-play-circle">
+                      <div class="export-tri"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="export-meta">
+                  <div class="export-row">
+                    <span class="export-label">Resolution</span>
+                    <span class="export-val">1920 × 1080</span>
+                  </div>
+                  <div class="export-row">
+                    <span class="export-label">Frames</span>
+                    <span class="export-val">127</span>
+                  </div>
+                  <div class="export-row">
+                    <span class="export-label">Duration</span>
+                    <span class="export-val">~5s at 24fps</span>
+                  </div>
+                </div>
+                <div class="export-share-btn">Share Video</div>
+              </div>
+            </div>
+            <p class="screenshot-caption">Export</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── FEATURES ─── -->
+    <section id="features" aria-labelledby="features-title">
+      <div class="section-label grad">Features</div>
+      <h2 class="section-title" id="features-title">Everything you need.<br>Nothing you don't.</h2>
+      <p class="section-sub">Purpose-built for timelapse — with smart controls that help you nail the shot, every time.</p>
+
+      <div class="features-grid">
+        <article class="feature-card">
+          <div class="feature-icon">⚙️</div>
+          <h3>Flexible Intervals</h3>
+          <p>From every second to every hour. Fine-tune timing to match the pace of any scene.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">🔒</div>
+          <h3>Exposure Lock</h3>
+          <p>Lock exposure and white balance before you start. Eliminate flicker and keep every frame consistent as the light changes.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">🌊</div>
+          <h3>Motion Trigger</h3>
+          <p>Let the scene decide when to shoot. Motion detection fires the shutter automatically the moment something moves.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">🖼️</div>
+          <h3>Layer Overlay</h3>
+          <p>Ghost the previous frame over your live view. Line up your shot perfectly across every capture.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">📐</div>
+          <h3>Composition Grid</h3>
+          <p>Toggle a rule-of-thirds grid to nail composition without guesswork, in any orientation.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">▶️</div>
+          <h3>Instant Playback</h3>
+          <p>Preview your timelapse the moment you stop shooting. Scrub through, adjust speed, and share immediately.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">🎬</div>
+          <h3>Video Export</h3>
+          <p>Render frames into a high-quality video and save to Camera Roll or share directly. Full output control.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">📁</div>
+          <h3>Project Library</h3>
+          <p>Organise shoots into projects. Keep multiple timelapses on the go without losing your work.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">🎮</div>
+          <h3>Game Controller Support</h3>
+          <p>Trigger shots remotely with a Bluetooth controller. Perfect for wildlife, events, or any scene you can't touch.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ─── HOW IT WORKS ─── -->
+    <div class="how-section" aria-labelledby="how-title">
+      <div>
+        <div class="section-label grad">How it works</div>
+        <h2 class="section-title" id="how-title">Up and shooting in seconds.</h2>
+        <p class="section-sub">Lapsey gets out of your way so you can focus on the shot.</p>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><h3>Create a project</h3><p>Start a project for your shoot. Keep everything organised from the start.</p></div>
+          <div class="step"><div class="step-num">2</div><h3>Set your interval</h3><p>Pick how often Lapsey fires — every second, every minute, anywhere in between.</p></div>
+          <div class="step"><div class="step-num">3</div><h3>Lock exposure</h3><p>Tap to lock exposure and white balance so every frame matches.</p></div>
+          <div class="step"><div class="step-num">4</div><h3>Hit record</h3><p>Press record and walk away. Lapsey runs quietly, capturing frame after frame.</p></div>
+          <div class="step"><div class="step-num">5</div><h3>Render &amp; share</h3><p>Export frames as a polished video and share it anywhere in minutes.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── PRO ─── -->
+    <section aria-labelledby="pro-title">
+      <div class="pro-card">
+        <div>
+          <div class="section-label grad">Lapsey Pro</div>
+          <h2 id="pro-title">One price. <span class="grad-text">Everything unlocked.</span> Forever.</h2>
+          <p>No subscriptions, no nonsense. Pay once and get full access to every feature — past and future.</p>
+          <ul class="pro-list" role="list">
+            <li>Unlimited projects &amp; frames</li>
+            <li>Motion detection trigger</li>
+            <li>Exposure &amp; white balance lock</li>
+            <li>High-quality video export</li>
+            <li>Layer overlay reference tool</li>
+            <li>Game controller shutter support</li>
+            <li>All future features included</li>
+          </ul>
+          <a class="btn-primary" href="https://apps.apple.com/app/id6467548808" rel="noopener">Get Lapsey Pro</a>
+        </div>
+        <div class="price-tag" aria-label="Price: £1.99 one-time">
+          <div class="price-amount">£1.99</div>
+          <div class="price-label">one-time purchase</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── FAQ ─── -->
+    <section aria-labelledby="faq-title">
+      <div class="section-label grad">FAQ</div>
+      <h2 class="section-title" id="faq-title">Common questions.</h2>
+      <div class="faq-list">
+        <details><summary>What devices does Lapsey support?</summary><div class="faq-body">Lapsey runs on any iPhone or iPad with iOS 17 or later. It's optimised for the full range of iPhone 15 and 16 cameras, including wide-angle and ultra-wide lenses.</div></details>
+        <details><summary>Do I need to keep the app open while recording?</summary><div class="faq-body">Yes — Lapsey captures frames using the live camera so the app needs to remain in the foreground. Plug in your device and disable auto-lock in Settings for long shoots.</div></details>
+        <details><summary>What's the shortest interval I can use?</summary><div class="faq-body">Lapsey can fire as frequently as every second, making it ideal for fast-moving subjects like traffic, weather, or crowds.</div></details>
+        <details><summary>Can I use Lapsey for stop-motion animation?</summary><div class="faq-body">Absolutely. The layer overlay feature lets you ghost the previous frame over the live view — the same technique animators use to keep motion smooth and consistent.</div></details>
+        <details><summary>Is the £1.99 a one-time purchase or a subscription?</summary><div class="faq-body">It's a one-time, non-renewing purchase. Pay once and unlock the full app permanently on all your devices.</div></details>
+        <details><summary>How do I trigger shots with a game controller?</summary><div class="faq-body">Connect an MFi-compatible, PlayStation, or Xbox controller to your iPhone via Bluetooth. Lapsey detects it automatically — press the trigger button to fire the shutter manually.</div></details>
+      </div>
+    </section>
+
+    <!-- ─── CTA ─── -->
+    <div class="cta-section">
+      <h2>Start your first timelapse <span class="grad-text">today.</span></h2>
+      <p>Download free and see what's been happening while you weren't watching.</p>
+      <a class="appstore-wrap" href="https://apps.apple.com/app/id6467548808" rel="noopener" aria-label="Download Lapsey on the App Store">
+        <span class="appstore-icon" aria-hidden="true"></span>
+        <span class="appstore-text">
+          <span class="appstore-sub">Download on the</span>
+          <span class="appstore-main">App Store</span>
+        </span>
+      </a>
+    </div>
+
+  </main>
+
+  <hr />
+  <footer>
+    <a class="footer-logo" href="/">Lapsey</a>
+    <ul class="footer-links">
+      <li><a href="https://apps.apple.com/app/id6467548808" rel="noopener">App Store</a></li>
+      <li><a href="mailto:samstone920@gmail.com">Support</a></li>
+      <li><a href="/lapsey/privacy.html">Privacy Policy</a></li>
+    </ul>
+    <p class="footer-copy">© 2024 Sam Stone. Made with care in the UK.</p>
+  </footer>
+
+</body>
+</html>
